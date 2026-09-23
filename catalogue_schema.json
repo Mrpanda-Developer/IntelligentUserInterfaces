@@ -1,0 +1,19 @@
+{
+  "title": "Anime Movie Recommendation Catalogue",
+  "description": "A catalogue of anime movies with different genres, moods, pacing, release periods, and running times.",
+  "identity_field": "movie_id",
+  "title_field": "title",
+  "description_field": "description",
+  "embedding_fields": ["title", "description", "genres", "mood", "studio"],
+  "fields": [
+    {"id": "movie_id", "label": "Movie ID", "type": "text", "required": true, "unique": true},
+    {"id": "title", "label": "Title", "type": "text", "required": true},
+    {"id": "description", "label": "Description", "type": "text", "required": true},
+    {"id": "genres", "label": "Genres", "type": "tags", "required": true, "options": ["fantasy", "adventure", "drama", "romance", "science fiction", "thriller", "mystery", "slice of life", "family", "psychological", "action"]},
+    {"id": "mood", "label": "Mood", "type": "tags", "required": true, "options": ["relaxing", "emotional", "romantic", "dark", "tense", "uplifting", "adventurous", "thought-provoking", "nostalgic", "surreal"]},
+    {"id": "duration_minutes", "label": "Duration in minutes", "type": "number", "required": true},
+    {"id": "pace", "label": "Pace", "type": "select", "options": ["slow", "medium", "fast"], "required": true},
+    {"id": "release_decade", "label": "Release decade", "type": "select", "options": ["1980s", "1990s", "2000s", "2010s", "2020s"], "required": true},
+    {"id": "studio", "label": "Studio", "type": "text", "required": true}
+  ]
+}
