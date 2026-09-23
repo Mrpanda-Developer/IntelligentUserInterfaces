@@ -1,0 +1,20 @@
+{
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "dimensions": 384,
+  "item_count": 12,
+  "item_ids": [
+    "anime_01",
+    "anime_02",
+    "anime_03",
+    "anime_04",
+    "anime_05",
+    "anime_06",
+    "anime_07",
+    "anime_08",
+    "anime_09",
+    "anime_10",
+    "anime_11",
+    "anime_12"
+  ],
+  "configuration_sha256": "0e9a28a012bd8376b60c8843c42317d062ab2ec26f5464489bc1e1c6409e0c52"
+}

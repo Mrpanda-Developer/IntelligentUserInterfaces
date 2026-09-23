@@ -1,0 +1,45 @@
+{
+  "title": "Context model",
+  "description": "Temporary information describing the current recommendation situation.",
+  "fields": [
+    {
+      "id": "available_time",
+      "label": "Available time",
+      "type": "number",
+      "default": 120,
+      "include_in_retrieval": true,
+      "item_fields": [
+        "duration_minutes"
+      ],
+      "weight": 2,
+      "matching": "prefer_smaller",
+      "constraint": {
+        "operator": "maximum",
+        "item_field": "duration_minutes"
+      }
+    },
+    {
+      "id": "current_mood",
+      "label": "Current mood",
+      "type": "select",
+      "default": "relaxing",
+      "include_in_retrieval": false,
+      "item_fields": [
+        "mood"
+      ],
+      "weight": 2,
+      "matching": "exact",
+      "options": [
+        "relaxing",
+        "uplifting",
+        "nostalgic",
+        "dark",
+        "tense",
+        "thought-provoking",
+        "romantic",
+        "emotional",
+        "adventurous"
+      ]
+    }
+  ]
+}

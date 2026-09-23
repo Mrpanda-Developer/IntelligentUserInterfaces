@@ -1,0 +1,88 @@
+{
+  "title": "User model",
+  "description": "Relatively stable characteristics and preferences used for personalisation.",
+  "fields": [
+    {
+      "id": "genre",
+      "label": "Choose genre",
+      "type": "select",
+      "default": "fantasy",
+      "include_in_retrieval": false,
+      "item_fields": [
+        "genres"
+      ],
+      "weight": 5,
+      "matching": "exact",
+      "options": [
+        "fantasy",
+        "adventure",
+        "drama",
+        "romance",
+        "science fiction",
+        "thriller",
+        "mystery",
+        "slice of life",
+        "family",
+        "psychological",
+        "action"
+      ]
+    },
+    {
+      "id": "preffered_pace",
+      "label": "Preferred pace",
+      "type": "select",
+      "default": "medium",
+      "include_in_retrieval": false,
+      "item_fields": [
+        "pace"
+      ],
+      "weight": 2,
+      "options": [
+        "slow",
+        "medium",
+        "fast"
+      ],
+      "matching": "exact"
+    },
+    {
+      "id": "release_decade",
+      "label": "Release decade eg:(1980)",
+      "type": "select",
+      "default": "1980s",
+      "include_in_retrieval": false,
+      "item_fields": [
+        "release_decade"
+      ],
+      "weight": 3,
+      "options": [
+        "1980s",
+        "1990s",
+        "2000s",
+        "2010s",
+        "2020s"
+      ],
+      "matching": "ordinal"
+    },
+    {
+      "id": "preferred_studio",
+      "label": "Preferred studio",
+      "type": "select",
+      "default": "None",
+      "include_in_retrieval": false,
+      "item_fields": [
+        "studio"
+      ],
+      "weight": 1,
+      "options": [
+        "None",
+        "Studio Ghibli",
+        "Madhouse",
+        "CoMix Wave Films",
+        "Studio Chizu",
+        "Production I.G",
+        "Tokyo Movie Shinsha"
+      ],
+      "matching": "exact"
+    }
+  ]
+}

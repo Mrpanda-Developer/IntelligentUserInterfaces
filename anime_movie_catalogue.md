@@ -4,8 +4,7 @@
 **Anime Movie Recommendation Catalogue**
 
 ## Catalogue description
-A catalogue of anime movies with different genres, moods, pacing, release periods, and running times.  
-The catalogue is designed so a recommender can personalize results based on a user's general movie preferences and their current viewing situation.
+A catalogue of anime movies with different genres, moods, pacing, release periods, and running times. This dataset is designed so a recommender can personalise results based on a user's general movie preferences and the current viewing situation.
 
 ---
 
@@ -36,7 +35,123 @@ The catalogue is designed so a recommender can personalize results based on a us
 
 ---
 
-## 3. Catalogue items
+## 3. User model and context model
+
+This catalogue is intended to work with a user model and a context model. Together, these models let the recommender combine long-term preferences with the current situation.
+
+### User model
+The user model stores relatively stable preferences that do not change often, such as favourite genres, preferred pace, preferred studio, and typical release period.
+
+Example user profile:
+- Preferred genre: fantasy
+- Preferred pace: medium
+- Favourite release decade: 1980s or 1990s
+- Preferred studio: Studio Ghibli
+
+Example JSON structure:
+```json
+{
+  "title": "User model",
+  "description": "Stable preferences used for personalisation.",
+  "fields": [
+    {
+      "id": "genre",
+      "label": "Choose genre",
+      "type": "select",
+      "default": "fantasy",
+      "include_in_retrieval": false,
+      "item_fields": ["genres"],
+      "weight": 5,
+      "matching": "exact",
+      "options": ["fantasy", "adventure", "drama", "romance", "science fiction"]
+    },
+    {
+      "id": "preferred_pace",
+      "label": "Preferred pace",
+      "type": "select",
+      "default": "medium",
+      "include_in_retrieval": false,
+      "item_fields": ["pace"],
+      "weight": 2,
+      "matching": "exact",
+      "options": ["slow", "medium", "fast"]
+    },
+    {
+      "id": "release_decade",
+      "label": "Release decade",
+      "type": "select",
+      "default": "1980s",
+      "include_in_retrieval": false,
+      "item_fields": ["release_decade"],
+      "weight": 3,
+      "matching": "ordinal",
+      "options": ["1980s", "1990s", "2000s", "2010s", "2020s"]
+    },
+    {
+      "id": "preferred_studio",
+      "label": "Preferred studio",
+      "type": "select",
+      "default": "Studio Ghibli",
+      "include_in_retrieval": false,
+      "item_fields": ["studio"],
+      "weight": 1,
+      "matching": "exact",
+      "options": ["Studio Ghibli", "Madhouse", "Production I.G", "Kyoto Animation"]
+    }
+  ]
+}
+```
+
+This means the system can rank movies like Spirited Away, My Neighbor Totoro, or Princess Mononoke more highly for a user who likes fantasy and Studio Ghibli films.
+
+### Context model
+The context model stores temporary information about the current recommendation situation, such as available time, current mood, or immediate viewing goal.
+
+Example context profile:
+- Available time: 120 minutes
+- Current mood: relaxing
+- Goal: an easy, comforting watch
+
+Example JSON structure:
+```json
+{
+  "title": "Context model",
+  "description": "Temporary information describing the current recommendation situation.",
+  "fields": [
+    {
+      "id": "available_time",
+      "label": "Available time",
+      "type": "number",
+      "default": 120,
+      "include_in_retrieval": true,
+      "item_fields": ["duration_minutes"],
+      "weight": 2,
+      "matching": "prefer_smaller",
+      "constraint": {
+        "operator": "maximum",
+        "item_field": "duration_minutes"
+      }
+    },
+    {
+      "id": "current_mood",
+      "label": "Current mood",
+      "type": "select",
+      "default": "relaxing",
+      "include_in_retrieval": false,
+      "item_fields": ["mood"],
+      "weight": 2,
+      "matching": "exact",
+      "options": ["relaxing", "uplifting", "nostalgic", "dark", "tense", "romantic", "adventurous"]
+    }
+  ]
+}
+```
+
+This means that if the user has limited time and wants to relax, the recommender may prefer a shorter, calming title such as My Neighbor Totoro or Kiki's Delivery Service over a longer, darker film such as Akira.
+
+---
+
+## 4. Catalogue items
 
 ### anime_01 — Spirited Away
 - **Title:** Spirited Away
@@ -157,3 +272,24 @@ The catalogue is designed so a recommender can personalize results based on a us
 - **Pace:** fast
 - **Release decade:** 2000s
 - **Studio:** Madhouse
+
+---
+
+## 5. Example recommendation scenarios
+
+### Scenario 1: Relaxing evening watch
+- User model: fantasy, medium pace, Studio Ghibli
+- Context model: available time = 90 minutes, current mood = relaxing
+- Best recommendations: My Neighbor Totoro, Kiki's Delivery Service, Spirited Away
+
+### Scenario 2: Shorter but still thoughtful movie
+- User model: science fiction, medium pace, no strong studio preference
+- Context model: available time = 80 minutes, current mood = thought-provoking
+- Best recommendations: Ghost in the Shell, Paprika, Perfect Blue
+
+### Scenario 3: Romantic weekend mood
+- User model: romance, medium pace, 2010s preferred
+- Context model: available time = 120 minutes, current mood = romantic
+- Best recommendations: Your Name, Weathering with You, Howl's Moving Castle
+
+This catalogue works well for teaching how personalised recommendation combines a stable user profile with a temporary context profile to rank and explain candidate movies.
