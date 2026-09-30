@@ -213,7 +213,7 @@ TARGET_FREQS = np.array(list(FREQUENCIES.values()), dtype=float)
 # Per-frequency confidence threshold, used by BrainWavesVisualizer.py to
 # decide whether a detection is trustworthy enough to publish.
 FREQ_THRESHOLDS = {FREQUENCIES[d]: cfg["threshold"] for d, cfg in DIRECTIONS.items()}
-CONSECUTIVE_REQUIRED_DEFAULT = 1  # default number of consecutive detections required before streaming
+CONSECUTIVE_REQUIRED_DEFAULT = 3  # default number of consecutive detections required before streaming
 
 # --- Legacy per-frequency names -------------------------------------
 # BrainWavesEmulator.py, BrainWavesVisualizer.py and FrequencyAnalysis.py
