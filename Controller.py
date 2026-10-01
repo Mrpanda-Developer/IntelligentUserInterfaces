@@ -29,7 +29,7 @@ class Controller:
         self.bci = bci
         bci_available = bci is not None and getattr(bci, "inlet", True) is not None
         self.control_mode = "bci" if bci_available else "keyboard"
-
+        self.paused_bci = False
         # --- move debouncing -------------------------------------------------
         # After a successful step we ignore new directions for
         # `_move_cooldown` seconds. This stops a single sustained BCI
@@ -71,6 +71,9 @@ class Controller:
         if self._cd_left > 0 or d not in VEC:
             return
 
+        if self.paused_bci and self.control_mode == "bci":
+            return
+
         self.armed_dir = d  # remember it so UI.py can highlight the matching arrow
         if self._try_step(d):
             self._cd_left = self._move_cooldown
@@ -92,3 +95,5 @@ class Controller:
         if self._cd_left > 0:
             self._cd_left = max(0.0, self._cd_left - dt)
         self.handle_bci(dt)
+
+    

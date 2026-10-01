@@ -172,6 +172,7 @@ def main():
 
     ui.frame_idx = 0
     running = True
+    paused_bci = False
     while running:
         dt = clock.tick(60) / 1000.0
 
@@ -186,7 +187,9 @@ def main():
                     print(f"[control] switched to {mode}")
                 elif ev.key in key_to_dir:
                     ctrl.handle_keyboard(key_to_dir[ev.key])
-
+                elif ev.key == pg.K_SPACE:
+                    ctrl.paused_bci = not ctrl.paused_bci
+                    print(f"[control] paused_bci = {ctrl.paused_bci}")
         ctrl.update(dt)
 
         # draw frame
@@ -197,6 +200,7 @@ def main():
             steps=ctrl.step_count,
             elapsed_s=ctrl.elapsed_time,
             control_mode=ctrl.control_mode,
+            paused_bci=ctrl.paused_bci,
         )
 
         pg.display.flip()

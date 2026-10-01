@@ -73,10 +73,10 @@ class UI:
                       for d, f in FREQUENCIES.items()}
 
     # --------------- public API ---------------
-    def draw(self, maze, pos_rc, armed_dir, steps=0, elapsed_s=0.0, control_mode="bci"):
+    def draw(self, maze, pos_rc, armed_dir, steps=0, elapsed_s=0.0, control_mode="bci", paused_bci=False):
         """Draw one full frame: sidebar, maze, avatar, HUD. Call once per frame."""
         # left panel
-        self._draw_sidebar(armed_dir, control_mode)
+        self._draw_sidebar(armed_dir, control_mode, paused_bci)
         # maze area (right)
         self._draw_maze(maze)
         self._draw_avatar(pos_rc)
@@ -89,7 +89,7 @@ class UI:
         return self.sidebar_px, 0
 
     # --------------- drawing ---------------
-    def _draw_sidebar(self, armed_dir, control_mode="bci"):
+    def _draw_sidebar(self, armed_dir, control_mode="bci", paused_bci=False):
         """
         Draw the four flickering arrows and their labels in the left panel.
 
@@ -111,6 +111,10 @@ class UI:
         self.surf.blit(title, (12, 10))
         mode_label = "Mode: " + ("BCI" if control_mode == "bci" else "Keyboard")
         self.surf.blit(self.small.render(mode_label, True, TEXT), (12, 29))
+
+        if control_mode == "bci":
+            pause_text = "Paused" if paused_bci else "Running"
+            self.surf.blit(self.small.render(f"BCI: {pause_text}", True, TEXT), (12, 45))
 
         # 2. where should each arrow go?
         dirs = SIDEBAR_ORDER  # top-to-bottom order; reorder in Config.py to try new layouts
