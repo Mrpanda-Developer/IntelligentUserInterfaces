@@ -24,7 +24,7 @@ public class TrashBinScorer : MonoBehaviour
     public bool hideDisposedItem = true;
 
     private HashSet<TrashItemThrowData> counted = new();
-
+    [SerializeField] private TextMeshPro score_text;
     // DO NOT CHANGE
     void Reset() { scoreZone = GetComponent<Collider>(); }
 
@@ -55,6 +55,7 @@ public class TrashBinScorer : MonoBehaviour
                 AudioSource.PlayClipAtPoint(successSound, center, successVolume);
             if (hideDisposedItem)
                 rb.gameObject.SetActive(false);
+            score_text.text = score.Tostring();
         }
         else
         {
