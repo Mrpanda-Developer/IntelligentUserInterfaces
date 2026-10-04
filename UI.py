@@ -115,6 +115,8 @@ class UI:
         if control_mode == "bci":
             pause_text = "Paused" if paused_bci else "Running"
             self.surf.blit(self.small.render(f"BCI: {pause_text}", True, TEXT), (12, 45))
+            hint = self.small.render("Stare at an arrow to move", True, TEXT)
+            self.surf.blit(hint, (12, 61))
 
         # 2. where should each arrow go?
         dirs = SIDEBAR_ORDER  # top-to-bottom order; reorder in Config.py to try new layouts
@@ -145,7 +147,7 @@ class UI:
         """
         size = ARROW_SIZE_PX
         panel_h = self.surf.get_height()
-        top_margin = 44 + size        # below the title, room for the first arrow
+        top_margin = 44 + 40 + size   # below title + mode/BCI/hint lines
         bottom_margin = 40 + 12 + size  # room for the last arrow + the HUD text
 
         y_min = top_margin
