@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TrashBinScorer : MonoBehaviour
@@ -22,9 +23,10 @@ public class TrashBinScorer : MonoBehaviour
     public AudioClip successSound;
     [Range(0f, 1f)] public float successVolume = 1f;
     public bool hideDisposedItem = true;
+    public GameObject gameObj;
 
     private HashSet<TrashItemThrowData> counted = new();
-    [SerializeField] private TextMeshPro score_text;
+    [SerializeField] private TMP_Text score_text;
     // DO NOT CHANGE
     void Reset() { scoreZone = GetComponent<Collider>(); }
 
@@ -55,7 +57,9 @@ public class TrashBinScorer : MonoBehaviour
                 AudioSource.PlayClipAtPoint(successSound, center, successVolume);
             if (hideDisposedItem)
                 rb.gameObject.SetActive(false);
-            score_text.text = score.Tostring();
+            if (score_text) score_text.text = score.ToString();
+            else Debug.LogWarning("TrashBinScorer: score_text is not assigned in the Inspector.");
+            
         }
         else
         {
